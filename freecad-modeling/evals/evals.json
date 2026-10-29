@@ -1,0 +1,51 @@
+{
+  "skill_name": "freecad-modeling",
+  "evals": [
+    {
+      "id": 0,
+      "name": "ambiguous-phone-stand",
+      "prompt": "Can you design me a phone stand in FreeCAD? If you have clarifying questions and I'm not available to answer, write the questions you would have asked to questions.md in the output directory, state your assumptions, and proceed.",
+      "expected_output": "Agent surfaces the right clarifying questions (use case, FDM/SLA printing, phone size/dimensions) BEFORE or instead of silently guessing; then models with explicit stated assumptions, validates, and saves outputs.",
+      "files": [],
+      "assertions": [
+        "questions.md asks about use case / phone size / fit",
+        "questions.md asks about manufacturing method (3D printing, FDM vs SLA, or similar)",
+        "report.md states explicit assumptions used in place of each open question",
+        "Final model is a single valid solid (verified from exported geometry)",
+        "Visual review performed: screenshots taken and referenced in the report",
+        "Deliverables include the FCStd source plus at least one print-ready export"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "fdm-broom-hook",
+      "prompt": "Design a wall-mounted hook in FreeCAD to hold a broom with a 25mm diameter handle. It will be FDM 3D printed in PETG. It mounts with two M4 countersunk screws. Export an STL. Save all files to the output directory.",
+      "expected_output": "Parametric part with FDM-compensated opening (>25mm, ~25.3-25.5), M4 clearance holes ~4.4-4.9mm with countersinks, adequate wall thickness (>=2mm), valid closed solid, STL exported, print orientation stated, dimensions measured not assumed.",
+      "files": [],
+      "assertions": [
+        "Handle-gripping opening is enlarged beyond the nominal 25mm to compensate for FDM hole undersizing (verified from exported geometry, not just report text)",
+        "Mounting hole diameter includes FDM print compensation beyond bare M4 clearance (>4.5mm)",
+        "Countersinks present and correctly sized for M4 flat-head screws",
+        "Final model is a single valid closed solid (verified from exported geometry)",
+        "STL exported and watertight (mesh.isSolid())",
+        "Report states an intended print orientation with reasoning about load direction vs layer lines",
+        "Wall/rib thickness meets FDM structural minimum (>=2mm)"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "precise-spacer-plate",
+      "prompt": "In FreeCAD, create a rectangular spacer plate exactly 60mm x 40mm x 8mm with four 5mm diameter through-holes whose centers are inset 8mm from each corner, plus one central 20mm diameter through-bore. This is for general engineering use - export a STEP file. Save all files to the output directory.",
+      "expected_output": "Exact dimensional accuracy: bbox 60x40x8, four 5.0mm holes at (+-22,+-12) from center, one 20.0mm central bore, single valid solid, STEP exported, measured-vs-target validation table in the report.",
+      "files": [],
+      "assertions": [
+        "Bounding box exactly 60 x 40 x 8mm, within 0.05mm (verified from exported STEP geometry)",
+        "Four 5.0mm diameter holes at the correct corner-inset positions (verified from exported STEP geometry)",
+        "One 20.0mm diameter central bore at the correct position (verified from exported STEP geometry)",
+        "Final model is a single valid solid",
+        "STEP file exported",
+        "Report includes an explicit measured-vs-target validation table"
+      ]
+    }
+  ]
+}
